@@ -14,16 +14,16 @@ pipeline {
         
         stage('Copy Artifact') {
            steps { 
-                   sh 'pwd'
-		   sh 'cp -r target/*.jar docker'
+                    sh 'pwd'
+		                sh 'cp -r target/*.jar docker'
            }
         }
          
         stage('Build docker image') {
            steps {
                script {         
-                 def customImage = docker.build('05021997/petclinic', "./docker")
-                 docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                 def customImage = docker.build('acrimghub/petclinic', "./docker")
+                 docker.withRegistry('https://acrimghub.azurecr.io', 'acrimghub') {
                  customImage.push("${env.BUILD_NUMBER}")
                  }                     
            }
